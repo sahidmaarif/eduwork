@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>E-Commerce Sederhana</title>
+
+    <!-- Bootstrap CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="bg-light">
+    <div class="container py-5">
+      <h2 class="text-center mb-4">Daftar Produk</h2>
+
+      <!-- Filter -->
+      <div class="mb-4 text-center">
+        <button class="btn btn-primary" onclick="filterProduk('all')">
+          Semua
+        </button>
+        <button class="btn btn-success" onclick="filterProduk('elektronik')">
+          Elektronik
+        </button>
+        <button class="btn btn-warning" onclick="filterProduk('fashion')">
+          Fashion
+        </button>
+      </div>
+
+      <!-- Produk -->
+      <div class="row" id="product-list"></div>
+    </div>
+
+    <script>
+      // Data Produk
+      const produk = [
+        {
+          nama: "Laptop",
+          harga: 10000000,
+          kategori: "elektronik",
+          deskripsi: "Laptop untuk kerja dan gaming",
+          gambar: "gambar/laptop.jpg",
+        },
+        {
+          nama: "HP",
+          harga: 5000000,
+          kategori: "elektronik",
+          deskripsi: "Smartphone terbaru",
+          gambar: "gambar/hp.jpg",
+        },
+        {
+          nama: "Kaos",
+          harga: 100000,
+          kategori: "fashion",
+          deskripsi: "Kaos nyaman dipakai",
+          gambar: "gambar/kaos.jpg",
+        },
+        {
+          nama: "Sepatu",
+          harga: 300000,
+          kategori: "fashion",
+          deskripsi: "Sepatu stylish",
+          gambar: "gambar/sepatu.jpg",
+        },
+      ];
+
+      // Fungsi tampilkan produk
+      function tampilkanProduk(data) {
+        const container = document.getElementById("product-list");
+        container.innerHTML = "";
+
+        data.forEach((item) => {
+          container.innerHTML += `
+        <div class="col-md-3 mb-4">
+          <div class="card h-100">
+            <img src="${item.gambar}" class="card-img-top">
+            <div class="card-body">
+              <h5 class="card-title">${item.nama}</h5>
+              <p class="card-text">${item.deskripsi}</p>
+              <p class="text-primary fw-bold">Rp ${item.harga.toLocaleString()}</p>
+            </div>
+          </div>
+        </div>
+      `;
+        });
+      }
+
+      // Filter Produk
+      function filterProduk(kategori) {
+        if (kategori === "all") {
+          tampilkanProduk(produk);
+        } else {
+          const hasil = produk.filter((item) => item.kategori === kategori);
+          tampilkanProduk(hasil);
+        }
+      }
+
+      // Load awal
+      tampilkanProduk(produk);
+    </script>
+  </body>
+</html>
