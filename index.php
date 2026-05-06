@@ -1,6 +1,12 @@
 <?php
+session_start();
 $message = "";
 $success = false;
+
+// Initialize products array in session if not exists
+if (!isset($_SESSION['products'])) {
+    $_SESSION['products'] = [];
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Ambil data dari form
@@ -22,6 +28,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         Nama: " . $nama . "<br>
                         Harga: Rp " . $harga . "<br>
                         Deskripsi: " . $deskripsi . "<br>";
+            
+            // Add to session
+            $_SESSION['products'][] = [
+                'nama' => $nama,
+                'harga' => $harga,
+                'deskripsi' => $deskripsi
+            ];
         }
     }
 }
@@ -55,19 +68,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <button type="submit">Simpan</button>
 </form>
 
-<?php if ($success): ?>
-<h2>Data Produk</h2>
+<?php if (!empty($_SESSION['products'])): ?>
+<h2>Daftar Produk</h2>
 <table border="1">
     <tr>
         <th>Nama Produk</th>
         <th>Harga</th>
         <th>Deskripsi</th>
     </tr>
+    <?php foreach ($_SESSION['products'] as $product): ?>
     <tr>
-        <td><?php echo htmlspecialchars($nama); ?></td>
-        <td>Rp <?php echo htmlspecialchars($harga); ?></td>
-        <td><?php echo htmlspecialchars($deskripsi); ?></td>
+        <td><?php echo htmlspecialchars($product['nama']); ?></td>
+        <td>Rp <?php echo htmlspecialchars($product['harga']); ?></td>
+        <td><?php echo htmlspecialchars($product['deskripsi']); ?></td>
     </tr>
+    <?php endforeach; ?>
 </table>
 <?php endif; ?>
 
