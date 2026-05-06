@@ -55,5 +55,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <button type="submit">Simpan</button>
 </form>
 
+<?php if ($success): ?>
+<h2>Data Produk</h2>
+<table border="1">
+    <tr>
+        <th>Nama Produk</th>
+        <th>Harga</th>
+        <th>Deskripsi</th>
+    </tr>
+    <tr>
+        <td><?php echo htmlspecialchars($nama); ?></td>
+        <td>Rp <?php echo htmlspecialchars($harga); ?></td>
+        <td><?php echo htmlspecialchars($deskripsi); ?></td>
+    </tr>
+</table>
+<?php endif; ?>
+
 </body>
 </html>
